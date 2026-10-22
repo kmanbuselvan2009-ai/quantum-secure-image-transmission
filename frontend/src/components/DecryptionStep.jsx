@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import StepCard from './StepCard.jsx'
 import DecryptionVerificationVisualizer from './visualizers/DecryptionVerificationVisualizer.jsx'
+import MatrixPixelScrambler from './visualizers/MatrixPixelScrambler.jsx'
 
-export default function DecryptionStep({ state, onDecrypt, decryptData, onNext }) {
+export default function DecryptionStep({ state, onDecrypt, decryptData, imagePreview, onNext }) {
   const [loading, setLoading] = useState(false)
   const [triggered, setTriggered] = useState(false)
 
@@ -56,6 +57,18 @@ export default function DecryptionStep({ state, onDecrypt, decryptData, onNext }
 
       {/* Two-Stage AEAD Verification & Progressive Scanline Visualizer */}
       <DecryptionVerificationVisualizer decryptData={decryptData} triggered={triggered} />
+
+      {/* Real-time Dynamic Laser Decryption Visualizer */}
+      {triggered && decryptData && (
+        <div style={{ margin: '20px 0' }}>
+          <MatrixPixelScrambler
+            imageSrc={imagePreview}
+            mode="decrypt"
+            success={decryptData.success}
+            authTagHex={decryptData.auth_tag || 'e4a8b79c201df3'}
+          />
+        </div>
+      )}
 
       {!triggered && (
         <div className="btn-row">

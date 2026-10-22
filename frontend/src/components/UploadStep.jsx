@@ -1,7 +1,8 @@
 import React, { useState, useCallback, useRef } from 'react'
 import ImageIngestionVisualizer from './visualizers/ImageIngestionVisualizer.jsx'
+import { DEMO_PRESETS, createPresetFile } from './demoPresets.js'
 
-const ALLOWED_TYPES = ['image/png', 'image/jpeg']
+const ALLOWED_TYPES = ['image/png', 'image/jpeg', 'image/svg+xml']
 const MAX_SIZE_MB = 20
 
 export default function UploadStep({ onFileSelected, selectedFile, imagePreview, onContinue }) {
@@ -140,6 +141,91 @@ export default function UploadStep({ onFileSelected, selectedFile, imagePreview,
           {error}
         </div>
       )}
+
+      {/* 1-Click Instant Scientific Presets */}
+      <div style={{ marginTop: 32 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
+          <span style={{ fontSize: '0.8125rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--accent)' }}>
+            ⚡ Instant Scientific Presets
+          </span>
+          <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
+            (1-Click test without uploading your own file)
+          </span>
+        </div>
+
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+          gap: 16,
+        }}>
+          {DEMO_PRESETS.map((preset) => (
+            <div
+              key={preset.id}
+              onClick={() => {
+                const { file } = createPresetFile(preset)
+                validateAndSet(file)
+              }}
+              style={{
+                background: 'var(--surface)',
+                border: '1px solid var(--border)',
+                borderRadius: 'var(--radius-lg)',
+                padding: '16px',
+                cursor: 'pointer',
+                transition: 'all 0.2s ease',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: 10,
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.borderColor = 'var(--accent)'
+                e.currentTarget.style.transform = 'translateY(-2px)'
+                e.currentTarget.style.boxShadow = '0 6px 20px rgba(0, 242, 254, 0.15)'
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.borderColor = 'var(--border)'
+                e.currentTarget.style.transform = 'translateY(0)'
+                e.currentTarget.style.boxShadow = 'none'
+              }}
+            >
+              <div style={{
+                height: 110,
+                borderRadius: 'var(--radius-md)',
+                overflow: 'hidden',
+                background: '#070b14',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                border: '1px solid var(--border-light)',
+              }}
+                dangerouslySetInnerHTML={{ __html: preset.svg }}
+              />
+              <div>
+                <div style={{ fontSize: '0.72rem', color: 'var(--accent)', fontWeight: 700, textTransform: 'uppercase' }}>
+                  {preset.category}
+                </div>
+                <h4 style={{ margin: '3px 0 4px 0', fontSize: '0.9375rem', fontWeight: 600 }}>
+                  {preset.title}
+                </h4>
+                <p style={{ margin: 0, fontSize: '0.75rem', color: 'var(--text-muted)', lineHeight: 1.4 }}>
+                  {preset.description}
+                </p>
+              </div>
+              <button
+                className="btn btn-ghost"
+                style={{
+                  marginTop: 'auto',
+                  fontSize: '0.75rem',
+                  padding: '4px 10px',
+                  alignSelf: 'flex-start',
+                  border: '1px solid var(--border)',
+                }}
+              >
+                Use Preset →
+              </button>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   )
 }

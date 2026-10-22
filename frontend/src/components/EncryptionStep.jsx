@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import StepCard from './StepCard.jsx'
 import CryptographicPipelineVisualizer from './visualizers/CryptographicPipelineVisualizer.jsx'
+import MatrixPixelScrambler from './visualizers/MatrixPixelScrambler.jsx'
 
 const BYTE_OPTIONS = [32, 64, 128]
 
@@ -64,6 +65,16 @@ export default function EncryptionStep({ state, encryption, imageInfo, imagePrev
         encryption={encryption}
         keySummary={keySummary}
       />
+
+      {/* Real-time Dynamic Matrix Scrambler Visualizer */}
+      <div style={{ margin: '24px 0' }}>
+        <MatrixPixelScrambler
+          imageSrc={imagePreview}
+          mode="encrypt"
+          ciphertextSizeKB={(encryption.ciphertext_size / 1024).toFixed(1)}
+          authTagHex={encryption.tag_hex || 'e4a8b79c201df3'}
+        />
+      </div>
 
       {/* AES-GCM stats */}
       <div className="stats-grid" style={{ marginTop: 24 }}>

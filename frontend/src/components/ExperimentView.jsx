@@ -247,6 +247,7 @@ export default function ExperimentView({ file, imagePreview, settings, onReset }
           state={stepState(7)}
           onDecrypt={handleDecrypt}
           decryptData={decryptData}
+          imagePreview={imagePreview}
           onNext={advanceStep}
         />
       )}

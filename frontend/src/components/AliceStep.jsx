@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import StepCard from './StepCard.jsx'
 import AliceStatePrepVisualizer from './visualizers/AliceStatePrepVisualizer.jsx'
+import BlochSphere3D from './visualizers/BlochSphere3D.jsx'
 
 export default function AliceStep({ state, data, onNext }) {
   const { alice_qubits_prepared, state_sample } = data
+  const [showBlochSphere, setShowBlochSphere] = useState(true)
 
   const summary = `${alice_qubits_prepared} qubits prepared and encoded into quantum states.`
 
@@ -47,6 +49,30 @@ export default function AliceStep({ state, data, onNext }) {
 
       {/* Optical Bench Apparatus & Qubit Stepper */}
       <AliceStatePrepVisualizer stateSample={state_sample} totalQubits={alice_qubits_prepared} />
+
+      {/* 3D WebGL Bloch Sphere Interactive Laboratory */}
+      <div style={{ margin: '24px 0' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
+          <p className="section-heading" style={{ margin: 0 }}>
+            3D Quantum State Geometry &amp; Bloch Sphere
+          </p>
+          <button
+            className="btn btn-ghost"
+            style={{ fontSize: '0.75rem', padding: '3px 10px', border: '1px solid var(--border)' }}
+            onClick={() => setShowBlochSphere(!showBlochSphere)}
+          >
+            {showBlochSphere ? '▲ Hide 3D Sphere' : '▼ Open Interactive 3D Sphere'}
+          </button>
+        </div>
+
+        {showBlochSphere && (
+          <BlochSphere3D
+            initialTheta={Math.PI / 4}
+            initialPhi={0}
+            interactive={true}
+          />
+        )}
+      </div>
 
       {state_sample && state_sample.length > 0 && (
         <div style={{ margin: '20px 0' }}>

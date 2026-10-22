@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import StepCard from './StepCard.jsx'
 import QBEREstimationVisualizer from './visualizers/QBEREstimationVisualizer.jsx'
+import AnalogQBERGauge from './visualizers/AnalogQBERGauge.jsx'
 
 const THRESHOLD = 11.0
 
@@ -47,6 +48,17 @@ export default function SecurityStep({ state, data, keyAccepted, keySummary, onN
         threshold={THRESHOLD}
         keyAccepted={keyAccepted}
       />
+
+      {/* High-Precision Analog Gauge & Interactive Eve Sandbox */}
+      <div style={{ margin: '24px 0' }}>
+        <AnalogQBERGauge
+          qber={qber / 100.0}
+          threshold={0.11}
+          channelNoise={qber / 100.0}
+          eveActive={!keyAccepted}
+          interactiveSandbox={true}
+        />
+      </div>
 
       {/* QBER Display */}
       <div className="qber-display">
