@@ -1,0 +1,51 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+.eggs/
+*.log
+.env
+.env.*
+*.key
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Qiskit / Aer caches
+.qiskit/
+
+# Node
+node_modules/
+.pnp
+.pnp.js
+
+# Vite / build output
+frontend/dist/
+frontend/.vite/
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Test artifacts
+backend/tests/__pycache__/
+.pytest_cache/
+
+# Credentials and secrets
+*.pem
+*.p12
+credentials.json
+secrets.json
